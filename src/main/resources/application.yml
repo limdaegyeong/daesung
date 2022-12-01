@@ -1,0 +1,16 @@
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/biz/
+      suffix: .jsp
+      
+  devtools:
+   livereload: 
+     enabled: true
+     
+  datasource:
+    db-member:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://dev.danbplus.com:53306/danbplus_ldk_db?serverTimezone=UTC&characterEncoding=UTF-8  
+      username: danb_001_ldk
+      password: Danb1235!!    

@@ -3,6 +3,7 @@ package com.danbplus.member.sample.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.danbplus.member.sample.domain.Member;
@@ -11,12 +12,15 @@ import com.danbplus.member.sample.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class MemberService {
 	private final MemberRepository memberRepository;
 	
 	public MemberService(MemberRepository memberRepository) {
-		log.info("###MemberService");
+		
 		this.memberRepository = memberRepository;
+		
+		log.info("###MemberService : {}" , memberRepository);
 	}
 	
 	@Transactional
@@ -28,8 +32,9 @@ public class MemberService {
 		*/
 		
 		//리팩토링(extract Method -> Alt + shift + m -> 함수명 지정
-		log.info("member : "+member);
-		validateDuplicateMember(member); //중복확인
+		//log.info("member : "+member);
+		log.info("###MemberService member : {}" , member);
+		//validateDuplicateMember(member); //중복확인
 		memberRepository.save(member);
 		return member.getMem_id();
 	}

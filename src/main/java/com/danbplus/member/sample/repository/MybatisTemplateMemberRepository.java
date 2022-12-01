@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.danbplus.member.sample.domain.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Repository
 public class MybatisTemplateMemberRepository implements MemberRepository {
 	
 	private SqlSession sqlSession;
@@ -21,6 +24,7 @@ public class MybatisTemplateMemberRepository implements MemberRepository {
 	
 	@Override
 	public Member save(Member member) {
+		log.info("####PSH Mybatis연동 확인 Save");
 		this.sqlSession.insert("MemberSource.save" , member);
 		return member;
 	}

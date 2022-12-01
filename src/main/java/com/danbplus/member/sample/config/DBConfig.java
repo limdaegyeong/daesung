@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,11 +14,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;;
+import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.extern.slf4j.Slf4j;;
 
+@Slf4j
 @Configuration
-@MapperScan(value = "com.danbplus.member.sample.repository.mapper.memberDB", sqlSessionFactoryRef = "MemberDBmybatisSqlSessionFactory")
+//@MapperScan(value = "com.danbplus.member.sample.repository.mapper.memberDB", sqlSessionFactoryRef = "MemberDBmybatisSqlSessionFactory")
 public class DBConfig {
 	
 	/**
@@ -60,6 +63,11 @@ public class DBConfig {
 		return sqlSessionFactoryBean.getObject();
 	}
 
+	@Bean(name="MemberDBmybatisSqlSessionTemplate")
+	public SqlSessionTemplate StudyDBmybatisSqlSessionTemplate(@Qualifier("MemberDBmybatisSqlSessionFactory")SqlSessionFactory MemberDBmybatisSqlSessionFactory) throws Exception{
+		log.info("##DBConfig StudyDBmybatisSqlSessionTemplate");
+		return new SqlSessionTemplate(MemberDBmybatisSqlSessionFactory);
+	}
 	
 
 }

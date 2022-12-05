@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<script>
+$("#memberCheck").on("click",function(){
+	$.ajax({
+		type: "json",  
+		url:  "/members/memberCheck", 
+		method : 'POST', 
+		success: function(data) {
+				 alert("data : "+data);
+		},
+		error : function(error , status){
+			console.log("error : "+error);
+			console.log("status : "+status);
+			
+		}
+	});
+});
+$("#home").on("click",function(){
+	location.href = "/";
+});
+</script>
+
+<div id="memberCheck">
+	<input type="text" id="mem_id" name="mem_id">
+	<input type="text" id="mem_pw" name="mem_pw">
+	<div>
+		<button id = "home">메인</button>
+	</div>
+</div>

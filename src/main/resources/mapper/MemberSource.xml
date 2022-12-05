@@ -17,6 +17,10 @@
 	</select>
 	
 	<select id="findAll" resultType="Member">
-		select mem_id , mem_name, mem_tel, mem_regDate, mem_upDate from login_member where order by mem_regDate desc
+		select mem_id , mem_name, mem_tel, mem_regDate, mem_uptDate from login_member order by mem_regDate desc
+	</select>
+	
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT count(*) cnt FROM from login_member where mem_id = #{mem_id}
 	</select>
 </mapper>

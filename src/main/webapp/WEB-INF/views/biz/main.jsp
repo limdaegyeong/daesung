@@ -14,7 +14,8 @@
 	<div id="mainList">
 		<h1 align="center">메인 페이지</h1>
 		회원가입 하기 <button id = "memberJoin">회원가입</button><br>
-		회원정보 보기 <button id = "memberList">회원 리스트</button>
+		회원정보 보기 <button id = "memberList">회원 리스트</button><br>
+		회원정보 수정 <button id = "memberUpt">회원정보 수정</button>
 	</div>
 </div>
 </body>
@@ -30,5 +31,28 @@ $("#memberJoin").on("click",function(){
 			}
 	});
 });
+
+$("#memberList").on("click", function(){
+	console.log("###memberList Click");
+	
+	$.ajax({
+		type: "html",  
+		url:  "/members/memberList.view", 
+		method : 'POST', 
+		success: function(data) {
+				 $("#main").html(data);
+		},
+		error : function(error , status){
+			console.log("error : "+error);
+			console.log("status : "+status);
+			
+		}
+	});
+});
+
+$("#memberUpt").on("click",function(){
+	
+});
+
 </script>
 </html>

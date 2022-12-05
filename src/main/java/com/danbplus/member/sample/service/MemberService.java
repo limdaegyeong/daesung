@@ -3,6 +3,8 @@ package com.danbplus.member.sample.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,7 @@ import com.danbplus.member.sample.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
+@Service //여기서 어노테이션을 쓰던지 config를 만들어서 주입시키던지 해야한다.
 public class MemberService {
 	private final MemberRepository memberRepository;
 	
@@ -63,4 +65,17 @@ public class MemberService {
 	public Optional<Member> findOne(String memberID){
 		return memberRepository.findById(memberID);
 	}
+	
+	/**
+	 * id 중복체크
+	 * @param memberID
+	 * @return
+	 */
+	public int idCheck(String mem_id){
+		
+		return memberRepository.idCheck(mem_id);
+	
+	}
+	
+	
 }

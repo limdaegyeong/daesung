@@ -10,4 +10,5 @@ public interface MemberRepository {
 	Optional<Member> findById(String id);
 	Optional<Member> findByTel(String tel);
 	List<Member> findAll();
+	int idCheck(String mem_id);
 }

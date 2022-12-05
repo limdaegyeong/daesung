@@ -13,10 +13,11 @@ import com.danbplus.member.sample.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Repository
+@Repository //여기서 어노테이션을 쓰던지 config를 만들어서 주입시키던지 해야한다.
 public class MybatisTemplateMemberRepository implements MemberRepository {
 	
 	private SqlSession sqlSession;
+
 	
 	public MybatisTemplateMemberRepository(SqlSession sqlsession) {
 		this.sqlSession = sqlsession;
@@ -52,5 +53,18 @@ public class MybatisTemplateMemberRepository implements MemberRepository {
 		List<Member> resultList = this.sqlSession.selectList("MemberSource.findAll");
 		return resultList;
 	}
+
+	@Override
+    public int idCheck(String mem_id){
+		int result = this.sqlSession.selectOne("MemberSource.idCheck", mem_id);
+        return result;
+
+    }
+
+
+
+
+
+
 
 }

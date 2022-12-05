@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;;
 @Slf4j
 @Configuration
 //@MapperScan(value = "com.danbplus.member.sample.repository.mapper.memberDB", sqlSessionFactoryRef = "MemberDBmybatisSqlSessionFactory")
-public class DBConfig {
+public class DBConfig {  // ㄴ> @MapperScan은 Mapper 방식일때 하는것. SqlSessionTemplate 객체를 선언했다면 쓸필요 없음!, mapper.java도 필요없음!!
 	
 	/**
 	 * 1.HikariConfig 생성

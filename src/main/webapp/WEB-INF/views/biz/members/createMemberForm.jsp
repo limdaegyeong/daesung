@@ -26,19 +26,42 @@ $("#createMemberSubmit").on("click", function(){
 		method : 'POST',
 		data: param, 
 		success: function(data) {
-				 alert("data : "+data);
+			alert("data : "+data);
+				 alert("회원가입이 완료되었습니다. ID : "+data);
+				 location.href = "/";
 				 }
 	});
 	
 
 });
+
+$("#idCheck").on("click",function(){
+	$.ajax({
+		url : "/members/idCheck",
+		type : "POST",
+		dataType : "JSON",
+		data : {"mem_id" : $("#mId").val()},
+		success : function(data){
+			if(data == 1){
+				alert("중복된 ID입니다.");
+			}else if(data == 0){
+				$("#idCheck").attr("value","Y");
+				alert("사용 가능한 ID입니다.");
+			}
+		}
+		
+		
+		
+	})
+})
 </script>
 
 <div id = "SampleCreateMemberForm">
 	<div class="container">
 		<div class="form-group">
 			<label for="mId">ID</label>
-			<input type="text" id="mId" name="mId" required/><br>
+			<input type="text" id="mId" name="mId" required/>
+			<button id="idCheck" value="N">중복확인</button><br>
 			<label for="mPw">PW</label>
 			<input type="text" id="mPw" name="mPw" required/><br>
 			<label for="mName">이름</label>

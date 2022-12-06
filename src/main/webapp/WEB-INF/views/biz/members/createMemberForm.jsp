@@ -20,39 +20,52 @@ $("#createMemberSubmit").on("click", function(){
 	param.mem_name	= name;
 	param.mem_tel	= tel;
 	
-	$.ajax({
-		type: "json",  
-		url:  "/members/createMember.act", 
-		method : 'POST',
-		data: param, 
-		success: function(data) {
-			alert("data : "+data);
-				 alert("회원가입이 완료되었습니다. ID : "+data);
-				 location.href = "/";
-				 }
-	});
-	
+	if(""==id || ""==pw || ""==name || ""==tel){
+		alert("정보를 모두 입력해주세요");
+	}else{
 
+		if($("#idCheck").val() == "Y"){
+			$.ajax({
+				type: "json",  
+				url:  "/members/createMember.act", 
+				method : 'POST',
+				data: param, 
+				success: function(data) {
+					alert("data : "+data);
+						 alert("회원가입이 완료되었습니다. ID : "+data);
+						 location.href = "/";
+						 }
+			});			
+		}else{
+			alert("ID 중복확인을 하지 않으셨습니다.");
+		}
+	}
+	
 });
 
 $("#idCheck").on("click",function(){
-	$.ajax({
-		url : "/members/idCheck",
-		type : "POST",
-		dataType : "JSON",
-		data : {"mem_id" : $("#mId").val()},
-		success : function(data){
-			if(data == 1){
-				alert("중복된 ID입니다.");
-			}else if(data == 0){
-				$("#idCheck").attr("value","Y");
-				alert("사용 가능한 ID입니다.");
+	if(""==$("#mId").val()){
+		alert("ID를 입력해주세요.");
+	}else{
+		$.ajax({
+			url : "/members/idCheck",
+			type : "POST",
+			dataType : "JSON",
+			data : {"mem_id" : $("#mId").val()},
+			success : function(data){
+				if(data == 1){
+					alert("중복된 ID입니다.");
+				}else if(data == 0){
+					$("#idCheck").attr("value","Y");
+					var setId = confirm("사용 가능한 ID입니다. 이 ID를 사용하시겠습니까?");
+					if(setId){
+						$("#mId").attr("readonly","true");
+					}
+				}
 			}
-		}
 		
-		
-		
-	})
+		});
+	}
 })
 </script>
 

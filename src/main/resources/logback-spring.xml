@@ -20,7 +20,7 @@
 
     <logger name="com.artiplace.api" level="debug"/>
 
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>

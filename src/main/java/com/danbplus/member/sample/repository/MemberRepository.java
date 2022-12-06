@@ -7,8 +7,8 @@ import com.danbplus.member.sample.domain.Member;
 
 public interface MemberRepository {
 	Member save(Member member);
-	Optional<Member> findById(String id);
-	Optional<Member> findByTel(String tel);
+	Optional<Member> findById(String mem_id);
+	Optional<Member> findByTel(String mem_tel);
 	List<Member> findAll();
 	int idCheck(String mem_id);
 }

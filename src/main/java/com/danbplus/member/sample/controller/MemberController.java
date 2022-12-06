@@ -2,12 +2,14 @@ package com.danbplus.member.sample.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -77,13 +79,13 @@ public class MemberController {
 		return result;
 	}
 	
-	
-	@RequestMapping("/members/memberCheck")
-	public String memberCheck() {
+	@ResponseBody
+	@RequestMapping(value="/members/editMemInfoForm", method = RequestMethod.POST)
+	public Optional<Member> editMemInfoForm(String mem_id) {
+		Optional<Member> member2 = memberService.findOne(mem_id);
+
 		
-		
-		
-		return "";
+		return member2;
 	}
 	
 }

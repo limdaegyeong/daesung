@@ -21,6 +21,6 @@
 	</select>
 	
 	<select id="idCheck" parameterType="String" resultType="int">
-		SELECT count(*) cnt FROM from login_member where mem_id = #{mem_id}
+		select count(*) from login_member where mem_id = #{mem_id}
 	</select>
 </mapper>

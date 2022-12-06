@@ -31,18 +31,18 @@ public class MybatisTemplateMemberRepository implements MemberRepository {
 	}
 
 	@Override
-	public Optional<Member> findById(String id) {
+	public Optional<Member> findById(String mem_id) {
 		// TODO Auto-generated method stub
 		HashMap findByIdParamMap = new HashMap<>();
-		findByIdParamMap.put("id", id);
+		findByIdParamMap.put("mem_id", mem_id);
 		Member member = this.sqlSession.selectOne("MemberSource.findById", findByIdParamMap);
 		return Optional.ofNullable(member);
 	}
 
 	@Override
-	public Optional<Member> findByTel(String tel) {
+	public Optional<Member> findByTel(String mem_tel) {
 		HashMap findByTelParamMap = new HashMap<>();
-		findByTelParamMap.put("mem_tel", tel);
+		findByTelParamMap.put("mem_tel", mem_tel);
 		Member member = new Member();
 		member = this.sqlSession.selectOne("MemberSource.findByTel", findByTelParamMap);
 		return Optional.ofNullable(member);

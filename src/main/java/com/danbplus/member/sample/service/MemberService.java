@@ -59,16 +59,16 @@ public class MemberService {
 	
 	/**
 	 * 회원조회
-	 * @param memberID
+	 * @param mem_id
 	 * @return
 	 */
-	public Optional<Member> findOne(String memberID){
-		return memberRepository.findById(memberID);
+	public Optional<Member> findOne(String mem_id){
+		return memberRepository.findById(mem_id);
 	}
 	
 	/**
 	 * id 중복체크
-	 * @param memberID
+	 * @param mem_id
 	 * @return
 	 */
 	public int idCheck(String mem_id){

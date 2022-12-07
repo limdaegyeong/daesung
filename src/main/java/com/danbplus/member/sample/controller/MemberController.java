@@ -39,6 +39,7 @@ public class MemberController {
 		return "/members/memberList";
 	}
 	
+	//회원가입 form
 	@RequestMapping("/members/create.view")
 	public ModelAndView createForm(Model model) {
 		ModelAndView mv = new ModelAndView();
@@ -46,6 +47,7 @@ public class MemberController {
 		return mv;
 	}
 	
+	//회원가입
 	//파라미터를 객체에 맵핑시킬때 선언해준다.
 	//객체로 받지않는경우에는 HttpServletRequest 객체에서 추출하여 사용한다.
 	@ResponseBody
@@ -57,6 +59,7 @@ public class MemberController {
 		return member.getMem_id()+"";
 	}
 	
+	//회원List 가져오기
 	@RequestMapping("/members/memberList.view")
 	public ModelAndView memberList(Member member , Model model) {
 		List<Member> members = memberService.findMembers();
@@ -70,6 +73,32 @@ public class MemberController {
 		return mv;
 	}
 	
+	//회원List 가져오기(회원정보 수정하기 위한 form)
+	@RequestMapping("/members/memberUpt.view")
+	public ModelAndView memberUptForm(Member member , Model model) {
+		List<Member> members = memberService.findMembers();
+		//ModelAndView mv = new ModelAndView("members/memberList");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("members/memberUpt");
+		log.info("###ModelAndView memberList : " + members);
+		//model.addAttribute("members" , members);
+		mv.addObject("members",members);
+		log.info("###memberList mv : " + mv);
+		return mv;
+	}
+	
+	//회원List 가져오기(회원정보 수정하기 위한 form)
+	@RequestMapping("/members/memberDelete.view")
+	public ModelAndView memberDelForm(Member member , Model model) {
+		List<Member> members = memberService.findMembers();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("members/memberDel");
+		mv.addObject("members",members);
+		return mv;
+	}
+	
+	
+	//id 중복체크
 	@ResponseBody
 	@RequestMapping(value="/members/idCheck", method = RequestMethod.POST)
 	public int idCheck(String mem_id) throws Exception{
@@ -79,13 +108,43 @@ public class MemberController {
 		return result;
 	}
 	
+	//수정,삭제 List에서 선택한 회원의 정보만 가져온다.
 	@ResponseBody
-	@RequestMapping(value="/members/editMemInfoForm", method = RequestMethod.POST)
+	@RequestMapping(value="/members/editMemForm", method = RequestMethod.POST)
 	public Optional<Member> editMemInfoForm(String mem_id) {
 		Optional<Member> member2 = memberService.findOne(mem_id);
-
-		
+		log.info("!!member2 : "+member2);
 		return member2;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="/members/pwCheck", method = RequestMethod.POST)
+	public int pwCheck(String mem_id, String mem_pw){
+		log.info("mem_id : "+mem_id+"mem_pw : "+mem_pw);
+		int member3 = memberService.pwCheck(mem_id, mem_pw);
+		log.info("###member3 : " + member3);
+		return member3;
+	}
+	
+	//회원정보 수정
+	@ResponseBody
+	@RequestMapping("/members/editMemInfo")
+	public String update(Member member, Model model) {
+		log.info("###update member 1 : "+member);
+		memberService.update(member);
+		return member.getMem_id()+"";
+	}
+	
+	//회원정보 삭제
+	@ResponseBody
+	@RequestMapping("/members/deleteMem")		
+	public String delete(Member member, Model model) {
+		log.info("###delete : "+ member);
+		memberService.delete(member);
+		return member.getMem_id()+"";
+	}
+	
+	
+
 }

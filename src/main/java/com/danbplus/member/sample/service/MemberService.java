@@ -77,5 +77,30 @@ public class MemberService {
 	
 	}
 	
+	/**
+	 * 회원정보 수정 전 password check
+	 * @param mem_id, mem_pw
+	 * @return
+	 */
+	public int pwCheck(String mem_id, String mem_pw){
+		log.info("MemberService id, pw: "+mem_id   +   mem_pw);
+		return memberRepository.pwCheck(mem_id, mem_pw);
+	}
+	
+	
+	@Transactional
+	public String update(Member member) {
+		log.info("memberservice member 1: "+member);
+		memberRepository.update(member);
+		return member.getMem_id();
+	}
+	
+	@Transactional
+	public String delete(Member member) {
+		memberRepository.delete(member);
+		return member.getMem_id();
+	}
+	
+	
 	
 }

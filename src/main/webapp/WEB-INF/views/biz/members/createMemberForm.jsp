@@ -76,7 +76,7 @@ $("#idCheck").on("click",function(){
 			<input type="text" id="mId" name="mId" required/>
 			<button id="idCheck" value="N">중복확인</button><br>
 			<label for="mPw">PW</label>
-			<input type="text" id="mPw" name="mPw" required/><br>
+			<input type="password" id="mPw" name="mPw" required/><br>
 			<label for="mName">이름</label>
 			<input type="text" id="mName" name="mName" required/><br>
 			전화번호<input type="text" id="mTel" name="mTel" placeholder="숫자만 입력해주세요" required/><br>

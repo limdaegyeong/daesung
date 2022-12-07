@@ -4,23 +4,42 @@
 
 <mapper namespace="MemberSource">
 	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Member">
-		insert into login_member(mem_id, mem_pw, mem_name, mem_tel, mem_regDate, mem_uptDate)
-		values ( #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_tel}, now(), now())
+		insert into login_member(mem_id, mem_pw, mem_name, mem_tel, mem_regDate, mem_uptDate, mem_delYN)
+		values ( #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_tel}, now(), now(), 0)
 	</insert>
 	
 	<select id="findById" parameterType="hashMap" resultType="Member">
-		select mem_id , mem_name, mem_tel from login_member where mem_id = #{mem_id}
+		select mem_id , mem_name, mem_tel from login_member where mem_id = #{mem_id} and mem_delYN = 0
 	</select>
 	
 	<select id="findByTel" parameterType="hashMap" resultType="Member">
-		select mem_id , mem_name, mem_tel from login_member where mem_tel = #{mem_tel}
+		select mem_id , mem_name, mem_tel from login_member where mem_tel = #{mem_tel} and mem_delYN = 0
 	</select>
 	
 	<select id="findAll" resultType="Member">
-		select mem_id , mem_name, mem_tel, mem_regDate, mem_uptDate from login_member order by mem_regDate desc
+		select mem_id , mem_name, mem_tel, mem_regDate, mem_uptDate from login_member where mem_delYN = 0 order by mem_regDate asc
 	</select>
 	
 	<select id="idCheck" parameterType="String" resultType="int">
 		select count(*) from login_member where mem_id = #{mem_id}
 	</select>
+	
+	<select id="pwCheck" parameterType="hashMap" resultType="int">
+		select count(*) from login_member where mem_id = #{mem_id} and mem_pw = #{mem_pw}
+	</select>
+	
+	<update id="updateMem" parameterType="Member">
+		update login_member 
+		set mem_pw = #{mem_pw}, mem_name = #{mem_name}, mem_tel = #{mem_tel}, mem_uptDate = now()
+		where mem_id = #{mem_id}
+	</update>
+	
+	<update id="deleteMem" parameterType="Member">
+		update login_member 
+		set mem_uptDate = now(), mem_delYN = 1
+		where mem_id = #{mem_id}
+	</update>
+	
+	
+	
 </mapper>

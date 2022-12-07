@@ -31,7 +31,7 @@ $("#home").on("click",function(){
 
 <div id="memberCheck">
 	<input type="text" id="mem_id" name="mem_id">
-	<input type="text" id="mem_pw" name="mem_pw">
+	<input type="password" id="mem_pw" name="mem_pw">
 	<div>
 		<button id = "home">메인</button>
 	</div>

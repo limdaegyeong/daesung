@@ -34,63 +34,79 @@ $(".editMemInfo").on("click",function(){
 		var mem_id = this.textContent;
 		$.ajax({
 			type: "JSON",  
-			url:  "/members/editMemInfoForm", 
+			url:  "/members/editMemForm", 
 			method : 'POST',
 			data: {"mem_id" : mem_id}, 
 			success:function(data) {
 				console.log("###data : "+data.mem_id);
-				//$("#memberList").html(data);
 				let html = "";
 				html += 'ID 		: <input type="text" id="mem_id" value='+data.mem_id+' readonly><br>';
-				html += '현재 PW		: <input type="text" id="mem_cPw" placeholder="비밀번호를 입력해 주세요"><button id="pwCheck" value="N">비밀번호확인</button><br>';
-				html += '변경할 PW	: <input type="text" id="mem_ePw" placeholder="비밀번호를 입력해 주세요"><br>';
+				html += '현재 PW		: <input type="password" id="mem_cPw" placeholder="비밀번호를 입력해 주세요"><button id="pwCheck" value="N">비밀번호확인</button><br>';
+				html += '변경할 PW	: <input type="password" id="mem_ePw" placeholder="비밀번호를 입력해 주세요"><br>';
 				html += '이름			:<input type="text" id="mem_name" value='+data.mem_name+'><br>';
 				html += '번호 		: <input	 type="text" id="mem_tel" value='+data.mem_tel+'><br>';
 				html += '<button id="memberUpt">수정하기</button>'
-				//$("#memberList").html(html);
-				
+				$("#TEST").html(html);
+				console.log("TTET");
 			}
 		});
 	};	
 });
 
-$("#pwCheck").on("click",function(){
+$(document).on("click","#pwCheck",function(){
 	let mem_id = $("#mem_id").val();
-	let mem_cPw = $("#mem_cPw").val();
+	let mem_pw = $("#mem_cPw").val();
+	console.log("###!");
 	$.ajax({
 		type: "JSON",  
 		url:  "/members/pwCheck", 
 		method : 'POST',
 		data: {"mem_id" : mem_id,
-			   "mem_cPw" : mem_cPw},
+			   "mem_pw" : mem_pw},
 		success:function(data) {
 			
-			$("#pwCheck").attr({
-				"value" : "Y",
-				"readonly" : "true"
-			});
+			if("0"==data){
+				alert("정보가 일치하지 않습니다. 다시 확인해주세요.");
+			}else if("1"==data){
+	 			$("#pwCheck").attr("value", "Y"); 				
+	 			$("#mem_cPw").attr("readonly", true); 
+	 			alert("비밀번호확인이 완료되었습니다.");
+			}
 			
 		}
+			
+		
 	});
-})
+});
 
-$("#memberUpt").on("click",function(){
+$(document).on("click","#memberUpt",function(){
+	var param={};
 	
-	var editCheck = confirm("회원 정보를 수정하시겠습니까?");
-	if(editCheck){
-		$.ajax({
-			type: "JSON",  
-			url:  "/members/editMemInfo", 
-			method : 'POST',
-			data: {"mem_id" : mem_id,
-				   "mem_pw" : mem_pw,
-				   "mem_name" : mem_name,
-				   "mem_tel" : mem_tel}, 
-			success:function(data) {
-				alert("success");
-				
-			}
-		});
+	param.mem_id = $("#mem_id").val();
+	param.mem_pw = $("#mem_ePw").val();
+	param.mem_name = $("#mem_name").val();
+	param.mem_tel = $("#mem_tel").val(); 
+	console.log("param : "+param);
+	if("" != $("#mem_id").val() && "" != $("#mem_ePw").val() && "" != $("#mem_name").val() && "" != $("#mem_tel").val()){
+		if($("#pwCheck").val() == "Y"){
+			var editCheck = confirm("회원 정보를 수정하시겠습니까?");
+			if(editCheck){
+				$.ajax({
+					type: "JSON",  
+					url:  "/members/editMemInfo", 
+					method : 'POST',
+					data: param,
+					success:function(data) {
+						alert("회원정보가 수정되었습니다. 수정하신 회원님의 ID : "+data);
+						
+					}
+				});
+			}	
+		}else{
+			alert("비밀번호 확인을 하지 않으셨습니다. 비밀번호를 확인해주세요.");
+		}
+	}else{
+		alert("회원 정보를 모두 입력해 주세요.");
 	}
 })
 
@@ -98,8 +114,8 @@ $("#memberUpt").on("click",function(){
 
 <div id="memberList">
 	<div class="container">
-		<div> 리스트
-			<table>
+		<div id="TEST"> <h1>수정하실 회원님의 ID를 클릭해주세요</h1>
+			<table >
 				<thead>
 					<tr>
 						<th>ID</th>

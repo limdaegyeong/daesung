@@ -61,6 +61,30 @@ public class MybatisTemplateMemberRepository implements MemberRepository {
 
     }
 
+	@Override
+	public int pwCheck(String mem_id, String mem_pw) {
+		HashMap findByTelParamMap = new HashMap<>();
+		findByTelParamMap.put("mem_id", mem_id);
+		findByTelParamMap.put("mem_pw", mem_pw);
+		log.info("Mybatis pwCheck : "+mem_id+"   "+mem_pw);
+		int result = this.sqlSession.selectOne("MemberSource.pwCheck",findByTelParamMap);
+		log.info("Mybatis result : "+result);
+		return result;
+	}
+
+	@Override
+	public String update(Member member) {
+		log.info("template member : "+ member);
+		this.sqlSession.update("MemberSource.updateMem", member);
+		return member.getMem_id();
+	}
+
+	@Override
+	public String delete(Member member) {
+		this.sqlSession.delete("MemberSource.deleteMem", member);
+		return member.getMem_id();
+	}
+
 
 
 

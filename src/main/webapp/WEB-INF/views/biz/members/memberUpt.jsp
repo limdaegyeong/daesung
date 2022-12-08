@@ -23,6 +23,7 @@
 	}
 </style>
 
+<!-- <script src="/resource/js/cmm/com.js"></script> -->
 <script>
 $("#home").on("click",function(){
 	location.href = "/";
@@ -88,28 +89,38 @@ $(document).on("click","#memberUpt",function(){
 	param.mem_tel = $("#mem_tel").val(); 
 	console.log("param : "+param);
 	if("" != $("#mem_id").val() && "" != $("#mem_ePw").val() && "" != $("#mem_name").val() && "" != $("#mem_tel").val()){
-		if($("#pwCheck").val() == "Y"){
-			var editCheck = confirm("회원 정보를 수정하시겠습니까?");
-			if(editCheck){
-				$.ajax({
-					type: "JSON",  
-					url:  "/members/editMemInfo", 
-					method : 'POST',
-					data: param,
-					success:function(data) {
-						alert("회원정보가 수정되었습니다. 수정하신 회원님의 ID : "+data);
-						
-					}
-				});
-			}	
+		if($("#mem_ePw").val().length < 4){
+			alert("비밀번호를 4자리 이상 입력해주세요.");
 		}else{
-			alert("비밀번호 확인을 하지 않으셨습니다. 비밀번호를 확인해주세요.");
+			if($("#pwCheck").val() == "Y"){
+				var editCheck = confirm("회원 정보를 수정하시겠습니까?");
+				if(editCheck){
+					$.ajax({
+						type: "JSON",  
+						url:  "/members/editMemInfo", 
+						method : 'POST',
+						data: param,
+						success:function(data) {
+							alert("회원정보가 수정되었습니다. 수정하신 회원님의 ID : "+data);
+							location.href="/";
+						}
+					});
+				}	
+			}else{
+				alert("비밀번호 확인을 하지 않으셨습니다. 비밀번호를 확인해주세요.");
+			}
 		}
 	}else{
 		alert("회원 정보를 모두 입력해 주세요.");
 	}
 })
 
+/* $(document).on("click","#test2",function(){
+	var param = {};
+	ajaxAction("json","/members/test",param,function(data){
+		alert("success");
+	});
+}); */
 </script>
 
 <div id="memberList">
@@ -140,6 +151,9 @@ $(document).on("click","#memberUpt",function(){
 		</div>
 		<div>
 			<button id = "home">메인</button>
+		</div>
+		<div>
+			<button id="test2">test2</button>
 		</div>
 	</div>
 </div>

@@ -23,21 +23,24 @@ $("#createMemberSubmit").on("click", function(){
 	if(""==id || ""==pw || ""==name || ""==tel){
 		alert("정보를 모두 입력해주세요");
 	}else{
-
-		if($("#idCheck").val() == "Y"){
-			$.ajax({
-				type: "json",  
-				url:  "/members/createMember.act", 
-				method : 'POST',
-				data: param, 
-				success: function(data) {
-					alert("data : "+data);
-						 alert("회원가입이 완료되었습니다. ID : "+data);
-						 location.href = "/";
-						 }
-			});			
+		if($("#mPw").val().length < 4){
+			alert("비밀번호를 4자리 이상 입력해주세요.");
 		}else{
-			alert("ID 중복확인을 하지 않으셨습니다.");
+			if($("#idCheck").val() == "Y"){
+				$.ajax({
+					type: "json",  
+					url:  "/members/createMember.act", 
+					method : 'POST',
+					data: param, 
+					success: function(data) {
+						alert("data : "+data);
+							 alert("회원가입이 완료되었습니다. ID : "+data);
+							 location.href = "/";
+							 }
+				});			
+			}else{
+				alert("ID 중복확인을 하지 않으셨습니다.");
+			}	
 		}
 	}
 	

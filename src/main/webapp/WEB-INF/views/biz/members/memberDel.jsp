@@ -86,7 +86,8 @@ $(document).on("click","#deleteMem",function(){
 				method : 'POST',
 				data: {"mem_id" : mem_id},
 				success:function(data) {
-					alert("data : "+data);
+					alert("삭제한 회원님의 ID : "+data);
+					location.href = "/";
 					
 				}
 			});

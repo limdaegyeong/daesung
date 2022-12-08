@@ -39,11 +39,6 @@ public class MemberController {
 		return "/members/memberList";
 	}
 	
-	@RequestMapping("/members/test")
-	//@ResponseBody
-	private String test() {
-		return "members/test";
-	}
 	
 	//회원가입 form
 	@RequestMapping("/members/create.view")
@@ -151,5 +146,10 @@ public class MemberController {
 		return member.getMem_id()+"";
 	}
 	
+	@RequestMapping("/members/test")
+	//@ResponseBody
+	private String test() {
+		return "members/test";
+	}
 
 }

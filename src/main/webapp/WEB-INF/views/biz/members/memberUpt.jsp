@@ -23,7 +23,7 @@
 	}
 </style>
 
-<!-- <script src="/resource/js/cmm/com.js"></script> -->
+<script src="/resource/js/cmm/com.js"></script>
 <script>
 $("#home").on("click",function(){
 	location.href = "/";
@@ -115,12 +115,12 @@ $(document).on("click","#memberUpt",function(){
 	}
 })
 
-/* $(document).on("click","#test2",function(){
+$(document).on("click","#test2",function(){
 	var param = {};
-	ajaxAction("json","/members/test",param,function(data){
-		alert("success");
+	ajaxAction("POST","/members/test",param,function(data){
+		alert("data : "+data);
 	});
-}); */
+}); 
 </script>
 
 <div id="memberList">

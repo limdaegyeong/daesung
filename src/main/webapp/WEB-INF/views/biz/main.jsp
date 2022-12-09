@@ -21,9 +21,10 @@
 </div>
 </body>
 </html>
+<script src="/resource/js/cmm/com.js"></script>
 <script type="text/javascript">
 $("#memberJoin").on("click",function(){
-	$.ajax({
+/* 	$.ajax({
 	type: "html",  
 	url:  "/members/create.view", 
 	method : 'POST',
@@ -31,13 +32,16 @@ $("#memberJoin").on("click",function(){
 	success:function(data) {
 			$("#main").html(data);
 			}
+	}); */
+	ajaxAction("POST","/members/create.view","",function(data){
+		$("#main").html(data);
 	});
 });
 
 $("#memberList").on("click", function(){
 	console.log("###memberList Click");
 	
-	$.ajax({
+/* 	$.ajax({
 		type: "html",  
 		url:  "/members/memberList.view", 
 		method : 'POST', 
@@ -49,11 +53,14 @@ $("#memberList").on("click", function(){
 			console.log("status : "+status);
 			
 		}
+	}); */
+	ajaxAction("POST","/members/memberList.view","",function(data){
+		$("#main").html(data);
 	});
 });
 
 $("#memberEdit").on("click",function(){
-	$.ajax({
+/* 	$.ajax({
 		type: "html",  
 		url:  "/members/memberUpt.view", 
 		method : 'POST', 
@@ -61,11 +68,14 @@ $("#memberEdit").on("click",function(){
 			console.log("###"+data);
 			$("#main").html(data);
 			}
+	}); */
+	ajaxAction("POST","/members/memberUpt.view","",function(data){
+		$("#main").html(data);
 	});
 });
 
 $("#memberDelete").on("click",function(){
-	$.ajax({
+/* 	$.ajax({
 		type: "html",  
 		url:  "/members/memberDelete.view", 
 		method : 'POST', 
@@ -73,7 +83,11 @@ $("#memberDelete").on("click",function(){
 			console.log("###"+data);
 			$("#main").html(data);
 			}
+	}); */
+	ajaxAction("POST","/members/memberDelete.view","",function(data){
+		$("#main").html(data);
 	});
+	
 });
 
 </script>

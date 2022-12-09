@@ -31,7 +31,7 @@ $("#home").on("click",function(){
 $(".deleteMem").on("click",function(){
 	let mem_id = this.textContent;
 	console.log("mem_id : "+mem_id);
-	$.ajax({
+/* 	$.ajax({
 		type: "JSON",  
 		url:  "/members/editMemForm", 
 		method : 'POST',
@@ -46,13 +46,21 @@ $(".deleteMem").on("click",function(){
 			$("#memberList").html(html);
 			console.log("TTET");
 		}
+	}); */
+	ajaxAction("POST","/members/editMemForm",{"mem_id" : mem_id},function(data){
+		let html = "";
+		html += '<h1> 비밀번호를 입력해주세요.</h1>';
+		html += 'ID : <input type="text" id="mem_id" value='+data.mem_id+' readonly><br>';
+		html += 'pw	: <input type="password" id="mem_pw" placeholder="비밀번호를 입력해 주세요"><button id="pwCheck" value="N">비밀번호확인</button><br>';
+		html += '<button id="deleteMem">삭제하기</button>'
+		$("#memberList").html(html);
 	});
 });
 
 $(document).on("click","#pwCheck",function(){
 	let mem_id = $("#mem_id").val();
 	let mem_pw = $("#mem_pw").val();
-	$.ajax({
+/* 	$.ajax({
 		type: "JSON",  
 		url:  "/members/pwCheck", 
 		method : 'POST',
@@ -69,6 +77,15 @@ $(document).on("click","#pwCheck",function(){
 			}
 			
 		}	
+	}); */
+	ajaxAction("POST","/members/pwCheck",{"mem_id" : mem_id, "mem_pw" : mem_pw},function(data){
+		if("0"==data){
+			alert("정보가 일치하지 않습니다. 다시 확인해주세요.");
+		}else if("1"==data){
+ 			$("#pwCheck").attr("value", "Y"); 				
+ 			$("#mem_pw").attr("readonly", true); 
+ 			alert("비밀번호확인이 완료되었습니다.");
+		}
 	});
 });
 
@@ -80,7 +97,7 @@ $(document).on("click","#deleteMem",function(){
 		let lastCheck = confirm("정말 삭제하시겠습니까?");
 		if(lastCheck){
 			console.log("ajax 동작");
-			$.ajax({
+/* 			$.ajax({
 				type: "JSON",  
 				url:  "/members/deleteMem", 
 				method : 'POST',
@@ -90,6 +107,10 @@ $(document).on("click","#deleteMem",function(){
 					location.href = "/";
 					
 				}
+			}); */
+			ajaxAction("POST","/members/deleteMem",{"mem_id" : mem_id},function(data){
+				alert("삭제한 회원님의 ID : "+data);
+				location.href = "/";
 			});
 		}
 	}else{

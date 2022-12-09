@@ -27,7 +27,7 @@ $("#createMemberSubmit").on("click", function(){
 			alert("비밀번호를 4자리 이상 입력해주세요.");
 		}else{
 			if($("#idCheck").val() == "Y"){
-				$.ajax({
+/* 				$.ajax({
 					type: "json",  
 					url:  "/members/createMember.act", 
 					method : 'POST',
@@ -37,7 +37,11 @@ $("#createMemberSubmit").on("click", function(){
 							 alert("회원가입이 완료되었습니다. ID : "+data);
 							 location.href = "/";
 							 }
-				});			
+				});	 */
+				ajaxAction("POST","/members/createMember.act",param,function(data){
+					 alert("회원가입이 완료되었습니다. ID : "+data);
+					 location.href = "/";
+				});
 			}else{
 				alert("ID 중복확인을 하지 않으셨습니다.");
 			}	
@@ -50,7 +54,7 @@ $("#idCheck").on("click",function(){
 	if(""==$("#mId").val()){
 		alert("ID를 입력해주세요.");
 	}else{
-		$.ajax({
+/* 		$.ajax({
 			url : "/members/idCheck",
 			type : "POST",
 			dataType : "JSON",
@@ -67,6 +71,17 @@ $("#idCheck").on("click",function(){
 				}
 			}
 		
+		}); */
+		ajaxAction("POST","/members/idCheck",{"mem_id" : $("#mId").val()},function(data){
+			if(data == 1){
+				alert("중복된 ID입니다.");
+			}else if(data == 0){
+				$("#idCheck").attr("value","Y");
+				var setId = confirm("사용 가능한 ID입니다. 이 ID를 사용하시겠습니까?");
+				if(setId){
+					$("#mId").attr("readonly","true");
+				}
+			}
 		});
 	}
 })

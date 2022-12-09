@@ -24,7 +24,7 @@
 </style>
 
 <script>
- $("#home").on("click",function(){
+$("#home").on("click",function(){
 	location.href = "/";
 });
 

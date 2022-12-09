@@ -33,7 +33,7 @@ $(".editMemInfo").on("click",function(){
 	var confirmCheck = confirm(this.textContent+" 님의 회원 정보를 수정하시겠습니까?")
 	if(confirmCheck){
 		var mem_id = this.textContent;
-		$.ajax({
+/* 		$.ajax({
 			type: "JSON",  
 			url:  "/members/editMemForm", 
 			method : 'POST',
@@ -50,6 +50,16 @@ $(".editMemInfo").on("click",function(){
 				$("#TEST").html(html);
 				console.log("TTET");
 			}
+		}); */
+		ajaxAction("POST","/members/editMemForm",{"mem_id" : mem_id},function(data){
+			let html = "";
+			html += 'ID 		: <input type="text" id="mem_id" value='+data.mem_id+' readonly><br>';
+			html += '현재 PW		: <input type="password" id="mem_cPw" placeholder="비밀번호를 입력해 주세요"><button id="pwCheck" value="N">비밀번호확인</button><br>';
+			html += '변경할 PW	: <input type="password" id="mem_ePw" placeholder="비밀번호를 입력해 주세요"><br>';
+			html += '이름			:<input type="text" id="mem_name" value='+data.mem_name+'><br>';
+			html += '번호 		: <input	 type="text" id="mem_tel" value='+data.mem_tel+'><br>';
+			html += '<button id="memberUpt">수정하기</button>'
+			$("#TEST").html(html);
 		});
 	};	
 });
@@ -58,7 +68,7 @@ $(document).on("click","#pwCheck",function(){
 	let mem_id = $("#mem_id").val();
 	let mem_pw = $("#mem_cPw").val();
 	console.log("###!");
-	$.ajax({
+/* 	$.ajax({
 		type: "JSON",  
 		url:  "/members/pwCheck", 
 		method : 'POST',
@@ -77,6 +87,15 @@ $(document).on("click","#pwCheck",function(){
 		}
 			
 		
+	}); */
+	ajaxAction("POST","/members/pwCheck",{"mem_id" : mem_id,"mem_pw" : mem_pw},function(data){
+		if("0"==data){
+			alert("정보가 일치하지 않습니다. 다시 확인해주세요.");
+		}else if("1"==data){
+ 			$("#pwCheck").attr("value", "Y"); 				
+ 			$("#mem_cPw").attr("readonly", true); 
+ 			alert("비밀번호확인이 완료되었습니다.");
+		}
 	});
 });
 
@@ -95,7 +114,7 @@ $(document).on("click","#memberUpt",function(){
 			if($("#pwCheck").val() == "Y"){
 				var editCheck = confirm("회원 정보를 수정하시겠습니까?");
 				if(editCheck){
-					$.ajax({
+/* 					$.ajax({
 						type: "JSON",  
 						url:  "/members/editMemInfo", 
 						method : 'POST',
@@ -104,6 +123,10 @@ $(document).on("click","#memberUpt",function(){
 							alert("회원정보가 수정되었습니다. 수정하신 회원님의 ID : "+data);
 							location.href="/";
 						}
+					}); */
+					ajaxAction("POST","/members/editMemInfo",param,function(data){
+						alert("회원정보가 수정되었습니다. 수정하신 회원님의 ID : "+data);
+						location.href="/";
 					});
 				}	
 			}else{

@@ -69,5 +69,14 @@ public class DBConfig {  // ㄴ> @MapperScan은 Mapper 방식일때 하는것. S
 		return new SqlSessionTemplate(MemberDBmybatisSqlSessionFactory);
 	}
 	
+	/* 질문!!
+	 * 
+	 * @Bean public MemberRepository memberRepository() { return new
+	 * MybatisTemplateMemberRepository(); }
+	 * 
+	 * @Bean public MemberService memberService() { return new
+	 * MemberService(memberRepository()); }
+	 */
+	
 
 }
